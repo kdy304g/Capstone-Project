@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 auth_dialog.setContentView(R.layout.auth_dialog);
                 web = (WebView) auth_dialog.findViewById(R.id.webv);
                 web.getSettings().setJavaScriptEnabled(true);
+                web.getSettings().setAllowFileAccessFromFileURLs(true);
+                web.getSettings().setAllowUniversalAccessFromFileURLs(true);
                 String url = OAUTH_URL + "?client_id=" + CLIENT_ID + "&response_type=code&state=TEST&redirect_uri=" + REDIRECT_URI + "&duration=temporary" + "&scope=" + OAUTH_SCOPE;
                 web.loadUrl(url);
                 Toast.makeText(getApplicationContext(), "" + url, Toast.LENGTH_LONG).show();
@@ -91,15 +93,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                         Map<String, String> map = new HashMap<String, String>();
-                        map.put("Access-Control-Allow-Origin",request.getUrl().toString());
+                        map.put("Access-Control-Allow-Origin:", "*");
                         view.loadUrl(request.getUrl().toString(), map);
                         return true;
                     }
-                    
+
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
                         Map<String, String> map = new HashMap<String, String>();
-                        map.put("Access-Control-Allow-Origin",url);
+                        map.put("Access-Control-Allow-Origin:","*");
                         view.loadUrl(url, map);
                         return true;
                     }
