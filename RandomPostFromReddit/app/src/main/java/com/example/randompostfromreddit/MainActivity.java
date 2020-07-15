@@ -1,6 +1,7 @@
 package com.example.randompostfromreddit;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -84,25 +86,34 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "" + url, Toast.LENGTH_LONG).show();
 
                 web.setWebViewClient(new WebViewClient() {
+
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("Access-Control-Allow-Origin",request.getUrl().toString());
+                        view.loadUrl(request.getUrl().toString(), map);
+                        return true;
+                    }
+                    
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
                         Map<String, String> map = new HashMap<String, String>();
-                        map.put("Access-Control-Allow-Origin","https://www.reddit.com/login/?dest=https%3A%2F%2Fwww.reddit.com%2Fapi%2Fv1%2Fauthorize%3Fclient_id%3D8QWhUSXGUjcwpg%26response_type%3Dcode%26state%3DTEST%26redirect_uri%3Dhttps%253A%252F%252Fgithub.com%252Fkdy304g%252FCapstone-Project%26duration%3Dtemporary%26scope%3Dread");
-
+                        map.put("Access-Control-Allow-Origin",url);
                         view.loadUrl(url, map);
-                        return false;
+                        return true;
                     }
 
                     @Override
                     public void onPageStarted(WebView view, String url, Bitmap favicon) {
                         super.onPageStarted(view, url, favicon);
-                        Log.i("","page started");
+                        Log.i("123","page started");
 
                     }
                     @Override
                     public void onPageFinished(WebView view, String url) {
                         super.onPageFinished(view, url);
-                        Log.i("","page finished");
+                        Log.i("123","page finished");
 
                         if (url.contains("?code=") || url.contains("&code=")) {
                             Log.i("","url contains ?code=");
