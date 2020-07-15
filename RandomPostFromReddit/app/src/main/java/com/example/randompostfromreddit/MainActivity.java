@@ -1,5 +1,6 @@
 package com.example.randompostfromreddit;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -14,6 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -31,6 +34,8 @@ import net.dean.jraw.oauth.OAuthHelper;
 
 import org.json.JSONException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,9 +86,13 @@ public class MainActivity extends AppCompatActivity {
                 web.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        view.loadUrl(url);
-                        return true;
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("Access-Control-Allow-Origin","https://www.reddit.com/login/?dest=https%3A%2F%2Fwww.reddit.com%2Fapi%2Fv1%2Fauthorize%3Fclient_id%3D8QWhUSXGUjcwpg%26response_type%3Dcode%26state%3DTEST%26redirect_uri%3Dhttps%253A%252F%252Fgithub.com%252Fkdy304g%252FCapstone-Project%26duration%3Dtemporary%26scope%3Dread");
+
+                        view.loadUrl(url, map);
+                        return false;
                     }
+
                     @Override
                     public void onPageStarted(WebView view, String url, Bitmap favicon) {
                         super.onPageStarted(view, url, favicon);
