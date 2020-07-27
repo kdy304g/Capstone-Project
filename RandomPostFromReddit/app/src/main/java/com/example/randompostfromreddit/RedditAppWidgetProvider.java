@@ -43,7 +43,7 @@ public class RedditAppWidgetProvider extends AppWidgetProvider {
             } else {
                 Picasso.get().load(data.getThumbnail()).into(views, R.id.widget_thumbnail, new int[] {appWidgetId});
             }
-            views.setTextViewText(R.id.widget_text,"I have an activity in my app where I would like the user to be able to vertically scroll the content contained inside a LinearLayout which in turn is inside a ScrollView. Here is a summary of what the layout XML for this activity looks like:");
+            views.setTextViewText(R.id.widget_text,data.getTitle());
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }
