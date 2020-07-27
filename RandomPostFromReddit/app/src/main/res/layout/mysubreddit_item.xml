@@ -9,6 +9,7 @@
         android:id="@+id/subreddit_unsubscribe"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
+        android:layout_margin="8dp"
         android:textSize="10sp"
         android:text="Unsubscribe"/>
     <TextView
@@ -19,7 +20,7 @@
         android:singleLine="true"
         android:textColor="@color/textDarkPrimary"
         android:fontFamily="sans-serif"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:gravity="center_vertical"
         android:paddingLeft="5dp"
         android:layout_margin="3dp"

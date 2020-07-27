@@ -10,10 +10,10 @@
         android:src="@drawable/reddit_post_default"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:padding="3dp"
         android:scaleType="centerCrop"
-        android:layout_margin="3dp"
-        android:contentDescription="TODO" />
+        android:layout_margin="8dp"
+        android:contentDescription="TODO"
+        android:layout_marginStart="8dp" />
     <TextView
         android:id="@+id/post_text"
         android:textColor="@color/textDarkPrimary"
