@@ -6,30 +6,42 @@
 
     <application
         android:usesCleartextTraffic="true"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8852219433224505~4186257133"/>
+        <receiver android:name="RedditAppWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/appwidgetproviderinfo" />
+        </receiver>
+        <activity
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" android:host="www.example.com" android:path="/my_redirect"/>
+            </intent-filter>
         </activity>
-        <meta-data
-            android:name="net.dean.jraw.android.REDDIT_USERNAME"
-            android:value="kdy304g" />
-        <meta-data
-            android:name="net.dean.jraw.android.CLIENT_ID"
-            android:value="6Nq3J6yRv2693Q" />
-        <meta-data
-            android:name="net.dean.jraw.android.REDIRECT_URL"
-            android:value="https://github.com/kdy304g/Capstone-Project" />
+        <activity android:name=".ui.SubredditActivity"/>
+        <activity android:name=".ui.MySubredditActivity"/>
+        <activity android:name=".ui.PostActivity"/>
     </application>
 
 </manifest>

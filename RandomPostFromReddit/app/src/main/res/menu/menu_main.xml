@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".ui.MainActivity">
+    <item android:id="@+id/get_newpost" android:title="Get New Post"
+        android:icon="@drawable/twotone_refresh_white_18"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/like_post"
+        android:icon="@drawable/twotone_favorite_white_18dp"
+        app:showAsAction="ifRoom"
+        android:title="Like Post" />
 </menu>
