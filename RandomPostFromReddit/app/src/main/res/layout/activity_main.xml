@@ -41,19 +41,31 @@
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/post_title"
+                        android:fontFamily="sans-serif-black"
+                        android:textColor="@color/textDarkPrimary"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:padding="5dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content" />
                     <TextView
                         android:id="@+id/post_url"
+                        android:fontFamily="sans-serif"
+                        android:padding="5dp"
                         android:autoLink="web"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp" />
                     <TextView
                         android:id="@+id/post_subreddit"
+                        android:fontFamily="sans-serif-condensed"
+                        android:padding="5dp"
+                        android:layout_marginRight="15dp"
+                        android:textColor="@color/textDarkSecondary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="end"
                         android:layout_marginLeft="5dp"/>
 
                 </LinearLayout>
@@ -61,10 +73,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
                 android:background="@android:color/black" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comment_rv"
                 android:layout_marginBottom="55dp"
+                android:scrollbars="vertical"
+                android:scrollbarSize="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -85,6 +100,7 @@
         app:menu="@menu/navigation_menu"
         app:headerLayout="@layout/nav_header"
         android:layout_gravity="start"
+        app:itemTextAppearance="@style/Style_TextView"
         android:id="@+id/nv">
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

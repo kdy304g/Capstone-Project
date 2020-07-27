@@ -16,6 +16,8 @@
         android:contentDescription="TODO" />
     <TextView
         android:id="@+id/post_text"
+        android:textColor="@color/textDarkPrimary"
+        android:fontFamily="sans-serif"
         android:layout_margin="3dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
