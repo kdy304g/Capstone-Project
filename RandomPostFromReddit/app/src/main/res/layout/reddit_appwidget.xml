@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/widget_bg"
-    android:padding="8dp"
+    android:padding="@dimen/widget_padding"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/widget_thumbnail"
         android:src="@drawable/reddit_post_default"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/widget_img_width"
+        android:layout_height="@dimen/widget_img_height"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop" />
@@ -22,6 +22,6 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="4"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="@dimen/widget_text_margin_left" />
 </RelativeLayout>
 

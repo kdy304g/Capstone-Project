@@ -44,13 +44,13 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        SharedPreferences pref = getSharedPreferences("AppPref", Context.MODE_PRIVATE);
-        final String code = pref.getString("code","");
+        SharedPreferences pref = getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE);
+        final String code = pref.getString(getString(R.string.code),"");
 
         Toolbar postToolbar = (Toolbar) findViewById(R.id.post_toolbar);
         setSupportActionBar(postToolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle("My Post");
+        actionbar.setTitle(R.string.post_activity_title);
         actionbar.setHomeAsUpIndicator(R.drawable.baseline_keyboard_backspace_white_18dp);
         actionbar.setDisplayHomeAsUpEnabled(true);
 
@@ -69,7 +69,7 @@ public class PostActivity extends AppCompatActivity {
                     }
                     @Override public void onLongItemClick(View view, int position) {
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                        Query titleQuery = ref.child("users").child(code).orderByChild("title").equalTo(postArray.get(position).getTitle());
+                        Query titleQuery = ref.child(getString(R.string.users)).child(code).orderByChild(getString(R.string.title)).equalTo(postArray.get(position).getTitle());
                         titleQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -81,13 +81,13 @@ public class PostActivity extends AppCompatActivity {
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
-                        Toast.makeText(PostActivity.this,"Deleted from My Post!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostActivity.this, R.string.delete_post,Toast.LENGTH_SHORT).show();
                     }
                 })
         );
 
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabaseReference = mDatabase.getReference().child("users").child(code);
+        DatabaseReference mDatabaseReference = mDatabase.getReference().child(getString(R.string.users)).child(code);
 
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -106,7 +106,7 @@ public class PostActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w("posts!", "loadPost:onCancelled", databaseError.toException());
+                Log.w(getString(R.string.post_cancel), getString(R.string.post_cancel_msg), databaseError.toException());
             }
         };
         mDatabaseReference.addValueEventListener(postListener);

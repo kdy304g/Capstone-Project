@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
+import com.example.randompostfromreddit.R;
 import com.example.randompostfromreddit.ui.MainActivity;
 
 import org.json.JSONException;
@@ -21,27 +22,28 @@ import okhttp3.Response;
 import okhttp3.Route;
 
 public class TokenAuthenticator implements Authenticator {
-    private static String CLIENT_ID = "8QWhUSXGUjcwpg";
-    private static String REDIRECT_URI = "http://www.example.com/my_redirect";
-    private static final String ACCESS_TOKEN_URL = "https://www.reddit.com/api/v1/access_token";
+    private static String CLIENT_ID = MainActivity.getContextOfApplication().getString(R.string.client_id);
+    private static String REDIRECT_URI = MainActivity.getContextOfApplication().getString(R.string.redirect_uri);
+    private static final String ACCESS_TOKEN_URL = MainActivity.getContextOfApplication().getString(R.string.access_token_url);
     private static String DEVICE_ID = UUID.randomUUID().toString();
 
     @Override
     public Request authenticate(Route route, Response response) throws IOException {
-        final SharedPreferences pref = MainActivity.getContextOfApplication().getSharedPreferences("AppPref", Context.MODE_PRIVATE);
-        String code = pref.getString("code","");
+        Context context = MainActivity.getContextOfApplication();
+        final SharedPreferences pref = MainActivity.getContextOfApplication().getSharedPreferences(context.getString(R.string.app_pref), Context.MODE_PRIVATE);
+        String code = pref.getString(context.getString(R.string.code),"");
         String newAccessToken = "";
 
         String authString = CLIENT_ID + ":";
         String encodedAuthString = Base64.encodeToString(authString.getBytes(),
                 Base64.NO_WRAP);
         Request request = new Request.Builder()
-                .addHeader("User-Agent", "Random Post From Reddit")
-                .addHeader("Authorization", "Basic " + encodedAuthString)
+                .addHeader(context.getString(R.string.user_agent), context.getString(R.string.app_name))
+                .addHeader(context.getString(R.string.authorization), context.getString(R.string.basic) + encodedAuthString)
                 .url(ACCESS_TOKEN_URL)
-                .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"),
-                        "grant_type=https://oauth.reddit.com/grants/installed_client&code=" + code + "&device_id=" + DEVICE_ID +
-                                "&redirect_uri=" + REDIRECT_URI))
+                .post(RequestBody.create(MediaType.parse(context.getString(R.string.url_encoded)),
+                        context.getString(R.string.rq_body_1) + code + context.getString(R.string.rq_body_2) + DEVICE_ID +
+                                context.getString(R.string.rq_body_3) + REDIRECT_URI))
                 .build();
         OkHttpClient client = new OkHttpClient();
         Response token_response = client.newCall(request).execute();
@@ -49,15 +51,15 @@ public class TokenAuthenticator implements Authenticator {
         JSONObject data = null;
         try {
             data = new JSONObject(json);
-            newAccessToken = data.optString("access_token");
+            newAccessToken = data.optString(context.getString(R.string.access_token));
             SharedPreferences.Editor edit = pref.edit();
-            edit.putString("token", newAccessToken);
+            edit.putString(context.getString(R.string.token), newAccessToken);
             edit.commit();
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return response.request().newBuilder()
-                .header("Authorization", "bearer " + newAccessToken)
+                .header(context.getString(R.string.authorization), context.getString(R.string.bearer) + newAccessToken)
                 .build();
     }
 }

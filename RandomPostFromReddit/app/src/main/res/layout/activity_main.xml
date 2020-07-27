@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:elevation="4dp"
+            android:elevation="@dimen/toolbar_elevation"
             app:titleTextColor="@color/white"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
@@ -29,14 +29,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="@dimen/main_image_width"
+                    android:layout_height="@dimen/main_image_height"
                     android:scaleType="centerCrop"
-                    android:padding="6dp"
-                    android:layout_marginLeft="3dp"
-                    android:id="@+id/post_image"/>
+                    android:padding="@dimen/main_image_padding"
+                    android:layout_marginLeft="@dimen/main_image_margin_start"
+                    android:id="@+id/post_image"
+                    android:layout_marginStart="@dimen/main_image_margin_start" />
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
@@ -45,41 +46,45 @@
                         android:textColor="@color/textDarkPrimary"
                         android:textStyle="bold"
                         android:textSize="16sp"
-                        android:padding="5dp"
+                        android:padding="@dimen/main_title_padding"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="wrap_content" />
+                        android:layout_marginLeft="@dimen/main_title_margin_start"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="@dimen/main_title_margin_start" />
                     <TextView
                         android:id="@+id/post_url"
                         android:fontFamily="sans-serif"
-                        android:padding="5dp"
+                        android:padding="@dimen/main_url_padding"
                         android:autoLink="web"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp" />
+                        android:layout_marginLeft="@dimen/main_url_margin_start"
+                        android:layout_marginStart="@dimen/main_url_margin_start" />
                     <TextView
                         android:id="@+id/post_subreddit"
                         android:fontFamily="sans-serif-condensed"
-                        android:padding="5dp"
-                        android:layout_marginRight="15dp"
+                        android:padding="@dimen/main_subreddit_padding"
+                        android:layout_marginRight="@dimen/main_subreddit_margin_right"
                         android:textColor="@color/textDarkSecondary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="@dimen/main_subreddit_margin_start"
+                        android:layout_marginEnd="@dimen/main_subreddit_margin_right"
+                        android:layout_marginStart="@dimen/main_subreddit_margin_start" />
 
                 </LinearLayout>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="5dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginBottom="@dimen/divider_margin_bottom"
                 android:background="@android:color/black" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comment_rv"
-                android:layout_marginBottom="55dp"
+                android:layout_marginBottom="@dimen/comment_rv_margin_bottom"
                 android:scrollbars="vertical"
-                android:scrollbarSize="5dp"
+                android:scrollbarSize="@dimen/scrollbar_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

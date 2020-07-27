@@ -34,7 +34,7 @@ public class MySubredditActivity extends AppCompatActivity {
         Toolbar mySubToolbar = (Toolbar) findViewById(R.id.mysub_toolbar);
         setSupportActionBar(mySubToolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle("My Subreddit");
+        actionbar.setTitle(R.string.subreddit_activity_title);
         actionbar.setHomeAsUpIndicator(R.drawable.baseline_keyboard_backspace_white_18dp);
         actionbar.setDisplayHomeAsUpEnabled(true);
 
@@ -45,8 +45,8 @@ public class MySubredditActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 new LinearLayoutManager(this).getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
-        SharedPreferences pref = getSharedPreferences("AppPref", Context.MODE_PRIVATE);
-        for (String str: pref.getStringSet("subreddit_set",new HashSet<String>()))
+        SharedPreferences pref = getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE);
+        for (String str: pref.getStringSet(getString(R.string.subreddit_set),new HashSet<String>()))
             children.add(str);
         adapter.setMysubreddits(children);
     }

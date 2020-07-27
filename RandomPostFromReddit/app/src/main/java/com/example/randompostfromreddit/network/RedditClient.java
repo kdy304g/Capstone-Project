@@ -14,13 +14,14 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.example.randompostfromreddit.R;
 
 public class RedditClient {
 
     public static RedditService getRedditService(){
-        Context applicationContext = MainActivity.getContextOfApplication();
-        final SharedPreferences pref = applicationContext.getSharedPreferences("AppPref", Context.MODE_PRIVATE);
-        final String token = pref.getString("token","");
+        final Context applicationContext = MainActivity.getContextOfApplication();
+        final SharedPreferences pref = applicationContext.getSharedPreferences(applicationContext.getString(R.string.app_pref), Context.MODE_PRIVATE);
+        final String token = pref.getString(applicationContext.getString(R.string.token),"");
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -31,7 +32,7 @@ public class RedditClient {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder ongoing = chain.request().newBuilder();
-                        ongoing.addHeader("Authorization", "bearer " + token);
+                        ongoing.addHeader(applicationContext.getString(R.string.authorization), applicationContext.getString(R.string.bearer) + token);
                         Response response = chain.proceed((ongoing.build()));
                         return response;
                     }
@@ -39,7 +40,7 @@ public class RedditClient {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://oauth.reddit.com")
+                .baseUrl(applicationContext.getString(R.string.oauth_base))
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient)
                 .build();

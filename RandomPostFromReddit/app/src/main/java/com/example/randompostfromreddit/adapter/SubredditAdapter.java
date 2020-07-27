@@ -48,15 +48,15 @@ public class SubredditAdapter extends RecyclerView.Adapter<SubredditAdapter.MyVi
             @Override
             public void onClick(View v) {
                 Context applicationContext = MainActivity.getContextOfApplication();
-                SharedPreferences pref = applicationContext.getSharedPreferences("AppPref", Context.MODE_PRIVATE);
+                SharedPreferences pref = applicationContext.getSharedPreferences(context.getString(R.string.app_pref), Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit = pref.edit();
-                Set<String> set = pref.getStringSet("subreddit_set",new HashSet<String>());
+                Set<String> set = pref.getStringSet(context.getString(R.string.subreddit_set),new HashSet<String>());
                 Set<String> newStrSet = new HashSet<String>();
                 newStrSet.add(children.get(position).getData().getUrl());
                 newStrSet.addAll(set);
-                edit.putStringSet("subreddit_set",newStrSet);
+                edit.putStringSet(context.getString(R.string.subreddit_set),newStrSet);
                 edit.commit();
-                Toast.makeText(context,"Subscribed to "+ children.get(position).getData().getTitle()+"!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,context.getString(R.string.subsribe)+" "+ children.get(position).getData().getTitle()+context.getString(R.string.exclamation),Toast.LENGTH_SHORT).show();
             }
         });
     }

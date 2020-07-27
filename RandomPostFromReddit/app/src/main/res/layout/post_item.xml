@@ -4,21 +4,19 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginBottom="3dp">
+    android:layout_marginBottom="@dimen/post_item_margin_bottom">
     <ImageView
         android:id="@+id/post_thumbnail"
         android:src="@drawable/reddit_post_default"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/post_thumb_width"
+        android:layout_height="@dimen/post_thumb_height"
         android:scaleType="centerCrop"
-        android:layout_margin="8dp"
-        android:contentDescription="TODO"
-        android:layout_marginStart="8dp" />
+        android:layout_margin="@dimen/post_thumb_margin" />
     <TextView
         android:id="@+id/post_text"
         android:textColor="@color/textDarkPrimary"
         android:fontFamily="sans-serif"
-        android:layout_margin="3dp"
+        android:layout_margin="@dimen/post_text_margin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

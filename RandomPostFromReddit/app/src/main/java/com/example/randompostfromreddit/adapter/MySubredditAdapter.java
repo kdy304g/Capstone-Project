@@ -2,7 +2,6 @@ package com.example.randompostfromreddit.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class MySubredditAdapter extends RecyclerView.Adapter<MySubredditAdapter.
         this.context = context;
         inflater = LayoutInflater.from(context);
         Context applicationContext = MainActivity.getContextOfApplication();
-        pref = applicationContext.getSharedPreferences("AppPref", Context.MODE_PRIVATE);
+        pref = applicationContext.getSharedPreferences(context.getString(R.string.app_pref), Context.MODE_PRIVATE);
     }
 
     @NonNull
@@ -52,16 +51,16 @@ public class MySubredditAdapter extends RecyclerView.Adapter<MySubredditAdapter.
         holder.unsubscribe.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"Unsubscribed from "+ subredditCapitalized +"!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,context.getString(R.string.unsubscribe)+" "+ subredditCapitalized +context.getString(R.string.exclamation),Toast.LENGTH_SHORT).show();
                 SharedPreferences.Editor edit1 = pref.edit();
-                Set<String> set = pref.getStringSet("subreddit_set",null);
+                Set<String> set = pref.getStringSet(context.getString(R.string.subreddit_set),null);
                 Set<String> newStrSet = new HashSet<String>();
                 newStrSet.addAll(set);
                 newStrSet.remove(subreddit);
-                edit1.putStringSet("subreddit_set",newStrSet);
+                edit1.putStringSet(context.getString(R.string.subreddit_set),newStrSet);
                 edit1.commit();
                 mysubreddits = new ArrayList<String>();
-                for (String str : pref.getStringSet("subreddit_set",null))
+                for (String str : pref.getStringSet(context.getString(R.string.subreddit_set),null))
                     mysubreddits.add(str);
                 notifyDataSetChanged();
             }
@@ -70,7 +69,7 @@ public class MySubredditAdapter extends RecyclerView.Adapter<MySubredditAdapter.
 
     @Override
     public int getItemCount() {
-        return pref.getStringSet("subreddit_set",new HashSet<String>()).size();
+        return pref.getStringSet(context.getString(R.string.subreddit_set),new HashSet<String>()).size();
     }
 
     public void setMysubreddits(ArrayList<String> mysubreddits){

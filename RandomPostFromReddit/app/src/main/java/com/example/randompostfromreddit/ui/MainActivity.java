@@ -37,7 +37,6 @@ import com.example.randompostfromreddit.model.Result;
 import com.example.randompostfromreddit.network.RedditClient;
 import com.example.randompostfromreddit.network.RedditService;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
@@ -70,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
     CommentAdapter adapter;
     private ArrayList<Child> comments = new ArrayList<>();
 
-    private static String OAUTH_BASE_URL = "https://www.reddit.com/api/v1/authorize.compact";
-    private static String CLIENT_ID = "8QWhUSXGUjcwpg";
-    private static String RESPONSE_TYPE = "code";
-    private static String REDIRECT_URI = "http://www.example.com/my_redirect";
-    private static String RANDOM_STRING = "some_random_string";
-    private static String SCOPE = "read";
-    private static final String ACCESS_TOKEN_URL = "https://www.reddit.com/api/v1/access_token";
+    private static String OAUTH_BASE_URL;
+    private static String CLIENT_ID;
+    private static String RESPONSE_TYPE;
+    private static String REDIRECT_URI;
+    private static String RANDOM_STRING;
+    private static String SCOPE;
+    private static String ACCESS_TOKEN_URL;
     private static String DEVICE_ID = UUID.randomUUID().toString();
     public static Context contextOfApplication;
 
@@ -88,14 +87,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        pref = getSharedPreferences("AppPref", Context.MODE_PRIVATE);
+        pref = getSharedPreferences(getString(R.string.app_pref), Context.MODE_PRIVATE);
         contextOfApplication = getApplicationContext();
+        OAUTH_BASE_URL  = getString(R.string.oauth_base_url);
+        CLIENT_ID = getString(R.string.client_id);
+        RESPONSE_TYPE = getString(R.string.code);
+        REDIRECT_URI = getString(R.string.redirect_uri);
+        RANDOM_STRING = getString(R.string.random_string);
+        SCOPE = getString(R.string.scope);
+        ACCESS_TOKEN_URL = getString(R.string.access_token_url);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle("Random Post");
+        actionbar.setTitle(R.string.main_activity_title);
         actionbar.setHomeAsUpIndicator(R.drawable.baseline_menu_white_18dp);
         actionbar.setDisplayHomeAsUpEnabled(true);
 
@@ -141,12 +146,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(!pref.getBoolean("logged in", false)){
+        if(!pref.getBoolean(getString(R.string.logged_in), false)){
             startSignIn();
         }
-        String linkFromWidget = getIntent().getStringExtra("permalink");
+        String linkFromWidget = getIntent().getStringExtra(getString(R.string.permalink));
         if(linkFromWidget != null){
-            Log.d("onCreate",getIntent().getStringExtra("permalink"));
             populatePost(linkFromWidget);
         } else{
             getNewPost();
@@ -165,17 +169,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(getIntent()!=null && getIntent().getAction() != null && getIntent().getAction().equals(Intent.ACTION_VIEW) && !pref.getBoolean("app_start", false)) {
+        if(getIntent()!=null && getIntent().getAction() != null && getIntent().getAction().equals(Intent.ACTION_VIEW) && !pref.getBoolean(getString(R.string.app_start), false)) {
             Uri uri = getIntent().getData();
-            if(uri.getQueryParameter("error") != null) {
-                java.lang.String error = uri.getQueryParameter("error");
-                Log.e("", "An error has occurred : " + error);
+            if(uri.getQueryParameter(getString(R.string.error)) != null) {
+                java.lang.String error = uri.getQueryParameter(getString(R.string.error));
+                Log.e("", getString(R.string.err_occurred) + error);
             } else {
-                java.lang.String state = uri.getQueryParameter("state");
+                java.lang.String state = uri.getQueryParameter(getString(R.string.state));
                 if(state.equals(RANDOM_STRING)) {
-                    String code = uri.getQueryParameter("code");
+                    String code = uri.getQueryParameter(getString(R.string.code));
                     SharedPreferences.Editor edit = pref.edit();
-                    edit.putString("code",code);
+                    edit.putString(getString(R.string.code),code);
                     edit.apply();
                     getAccessToken(code);
                 }
@@ -203,13 +207,13 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = pref.edit();
                     Gson gson = new Gson();
                     String post = gson.toJson(article.getData());
-                    editor.putString("current_post",post);
+                    editor.putString(getString(R.string.current_post),post);
                     editor.commit();
                     title.setText(article.getData().getTitle());
                     url.setText(article.getData().getUrl());
-                    subreddit_name.setText("Subreddit: "+article.getData().getSubreddit());
+                    subreddit_name.setText(getString(R.string.subreddit)+article.getData().getSubreddit());
                     String image_url = article.getData().getThumbnail();
-                    if (image_url.isEmpty() || image_url.equals("self") || image_url.equals("default") || image_url.equals("spoiler") || image_url.equals("nsfw")){
+                    if (image_url.isEmpty() || image_url.equals(getString(R.string.self)) || image_url.equals(getString(R.string.default_)) || image_url.equals(getString(R.string.spoiler))|| image_url.equals(getString(R.string.nsfw))){
                         post_image.setVisibility(View.GONE);
                     }else{
                         post_image.setVisibility((View.VISIBLE));
@@ -228,9 +232,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void getNewPost(){
         SharedPreferences.Editor edit = pref.edit();
-        edit.putBoolean("liked",false);
+        edit.putBoolean(getString(R.string.liked),false);
         edit.commit();
-        Set<String> subreddit_set = pref.getStringSet("subreddit_set",new HashSet<String>());
+        Set<String> subreddit_set = pref.getStringSet(getString(R.string.subreddit_set),new HashSet<String>());
         int i = 0;
         String chosen = "";
         for(String str : subreddit_set)
@@ -253,23 +257,23 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(retrofit2.Call<Result> call, Throwable t) {
-                Log.d("error ",t.getMessage());
+                Log.d(getString(R.string.error),t.getMessage());
             }
         });
     }
 
     public void writePostFirebase(){
-        String post = pref.getString("current_post","");
-        String code = pref.getString("code","");
+        String post = pref.getString(getString(R.string.current_post),"");
+        String code = pref.getString(getString(R.string.code),"");
         Gson gson = new Gson();
         Child_Data data = gson.fromJson(post, Child_Data.class);
-        if(!pref.getBoolean("liked",false)){
+        if(!pref.getBoolean(getString(R.string.liked),false)){
             FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-            DatabaseReference mDatabaseReference = mDatabase.getReference().child("users").child(code).push();
+            DatabaseReference mDatabaseReference = mDatabase.getReference().child(getString(R.string.users)).child(code).push();
             mDatabaseReference.setValue(data);
         }
         SharedPreferences.Editor edit = pref.edit();
-        edit.putBoolean("liked",true);
+        edit.putBoolean(getString(R.string.liked),true);
         edit.commit();
     }
 
@@ -292,19 +296,19 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.like_post:
                 writePostFirebase();
-                Toast.makeText(getApplicationContext(), "Added to My Post!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.post_added, Toast.LENGTH_SHORT).show();
                 return true;
         }
         return true;
     }
 
     public void startSignIn() {
-        String url = OAUTH_BASE_URL + "?client_id=" + CLIENT_ID + "&response_type=" + RESPONSE_TYPE +
-                "&state=" + RANDOM_STRING + "&redirect_uri=" + REDIRECT_URI + "&scope=" + SCOPE;
+        String url = OAUTH_BASE_URL + getString(R.string.url_1) + CLIENT_ID + getString(R.string.url_2) + RESPONSE_TYPE +
+                getString(R.string.url_3) + RANDOM_STRING + getString(R.string.url_4) + REDIRECT_URI + getString(R.string.url_5) + SCOPE;
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
         SharedPreferences.Editor edit = pref.edit();
-        edit.putBoolean("logged in",true);
+        edit.putBoolean(getString(R.string.logged_in),true);
         edit.apply();
     }
 
@@ -313,18 +317,18 @@ public class MainActivity extends AppCompatActivity {
         String authString = CLIENT_ID + ":";
         String encodedAuthString = Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
         Request request = new Request.Builder()
-                .addHeader("User-Agent", "Random Post From Reddit")
-                .addHeader("Authorization", "Basic " + encodedAuthString)
+                .addHeader(getString(R.string.user_agent), getString(R.string.app_name))
+                .addHeader(getString(R.string.authorization), getString(R.string.basic) + encodedAuthString)
                 .url(ACCESS_TOKEN_URL)
-                .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"),
-                        "grant_type=https://oauth.reddit.com/grants/installed_client&code=" + code + "&device_id=" + DEVICE_ID +
-                                "&redirect_uri=" + REDIRECT_URI))
+                .post(RequestBody.create(MediaType.parse(getString(R.string.url_encoded)),
+                        getString(R.string.rq_body_1) + code + getString(R.string.rq_body_2) + DEVICE_ID +
+                                getString(R.string.rq_body_3) + REDIRECT_URI))
                 .build();
 
         client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
-                Log.e("", "ERROR: " + e);
+                Log.e("", getString(R.string.error) + e);
             }
 
             @Override
@@ -333,10 +337,10 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject data = null;
                 try {
                     data = new JSONObject(json);
-                    String token = data.optString("access_token");
+                    String token = data.optString(getString(R.string.access_token));
                     SharedPreferences.Editor edit = pref.edit();
-                    edit.putString("token", token);
-                    edit.putBoolean("app_start",true);
+                    edit.putString(getString(R.string.token), token);
+                    edit.putBoolean(getString(R.string.app_start),true);
                     edit.commit();
                     getNewPost();
                 } catch (JSONException e) {

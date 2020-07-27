@@ -8,10 +8,10 @@
     <Button
         android:id="@+id/subreddit_unsubscribe"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_margin="8dp"
+        android:layout_height="@dimen/unsubscribe_btn_height"
+        android:layout_margin="@dimen/unsubscribe_btn_margin"
         android:textSize="10sp"
-        android:text="Unsubscribe"/>
+        android:text="@string/unsubscribe_"/>
     <TextView
         android:id="@+id/mysubreddit_text"
         android:layout_width="match_parent"
@@ -22,8 +22,8 @@
         android:fontFamily="sans-serif"
         android:textSize="14sp"
         android:gravity="center_vertical"
-        android:paddingLeft="5dp"
-        android:layout_margin="3dp"
-        android:paddingStart="5dp"
+        android:paddingLeft="@dimen/mysubreddit_padding_start"
+        android:layout_margin="@dimen/mysubreddit_margin"
+        android:paddingStart="@dimen/mysubreddit_padding_start"
         tools:ignore="RtlSymmetry" />
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.example.randompostfromreddit.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -39,7 +38,7 @@ public class SubredditActivity extends AppCompatActivity {
         Toolbar subToolbar = (Toolbar) findViewById(R.id.sub_toolbar);
         setSupportActionBar(subToolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle("Popular subreddit");
+        actionbar.setTitle(R.string.popular_activity_title);
         actionbar.setHomeAsUpIndicator(R.drawable.baseline_keyboard_backspace_white_18dp);
         actionbar.setDisplayHomeAsUpEnabled(true);
 

@@ -7,17 +7,17 @@
     <Button
         android:id="@+id/subreddit_subscribe"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_margin="8dp"
+        android:layout_height="@dimen/subscribe_btn_height"
+        android:layout_margin="@dimen/subscribe_btn_margin"
         android:textSize="10sp"
-        android:text="Subscribe"/>
+        android:text="@string/subscribe_"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
             android:id="@+id/subreddit_text"
-            android:padding="5dp"
+            android:padding="@dimen/subreddit_text_padding"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -26,7 +26,7 @@
             android:fontFamily="sans-serif" />
         <TextView
             android:id="@+id/smallsubreddit_text"
-            android:paddingBottom="5dp"
+            android:paddingBottom="@dimen/small_subreddit_text_padding_bottom"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/textDarkSecondary"

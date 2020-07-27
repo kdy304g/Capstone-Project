@@ -6,10 +6,9 @@
     android:gravity="center"
     android:background="@color/colorPrimaryDark">
     <ImageView
-        android:layout_width="180dp"
-        android:layout_height="130dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_width="@dimen/menu_img_width"
+        android:layout_height="@dimen/menu_img_height"
+        android:layout_marginBottom="@dimen/menu_img_margin_bottom"
+        android:layout_marginTop="@dimen/menu_img_margin_top"
         android:background="@drawable/reddit_default"/>
-
 </LinearLayout>

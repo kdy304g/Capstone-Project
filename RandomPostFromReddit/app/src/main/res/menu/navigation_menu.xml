@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/popular_subreddit"
-        android:title="Popular Subreddit"/>
+        android:title="@string/popular_subreddit"/>
     <item android:id="@+id/my_subreddit"
-        android:title="My Subreddit"/>
+        android:title="@string/my_subreddit"/>
     <item android:id="@+id/my_post"
-        android:title="My Post"/>
+        android:title="@string/my_post"/>
 </menu>

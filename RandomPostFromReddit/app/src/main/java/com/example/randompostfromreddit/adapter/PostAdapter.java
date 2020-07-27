@@ -41,7 +41,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, int position) {
         holder.post_text.setText(posts.get(position).getTitle());
         String image_url = posts.get(position).getThumbnail();
-        if (image_url.isEmpty() || image_url.equals("self") || image_url.equals("default") || image_url.equals("spoiler")|| image_url.equals("nsfw")){
+        if (image_url.isEmpty() || image_url.equals(context.getString(R.string.self)) || image_url.equals(context.getString(R.string.default_)) || image_url.equals(context.getString(R.string.spoiler))|| image_url.equals(context.getString(R.string.nsfw))){
             holder.post_thumbnail.setImageResource(R.drawable.reddit_post_default);
         } else {
             Picasso.get().load(image_url).into((holder.post_thumbnail));
