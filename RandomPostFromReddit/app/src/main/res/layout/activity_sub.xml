@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/sub_toolbar"
+        android:contentDescription="@string/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -16,6 +17,7 @@
         tools:ignore="MissingConstraints" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subreddit_rv"
+        android:contentDescription="@string/list_of_popular_subreddits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize" />

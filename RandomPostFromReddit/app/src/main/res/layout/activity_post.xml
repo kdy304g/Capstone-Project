@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/post_toolbar"
+        android:contentDescription="@string/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -14,6 +15,7 @@
         app:popupTheme="@style/AppTheme.PopupOverlay" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/post_rv"
+        android:contentDescription="@string/list_of_my_favorite_posts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize"/>

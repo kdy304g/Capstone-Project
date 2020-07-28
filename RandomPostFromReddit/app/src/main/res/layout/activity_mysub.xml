@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mysub_toolbar"
+        android:contentDescription="@string/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -15,6 +16,7 @@
         app:popupTheme="@style/AppTheme.PopupOverlay" />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="?attr/actionBarSize"
+        android:contentDescription="@string/list_of_subsribed_subreddits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mysub_rv"/>

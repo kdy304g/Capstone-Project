@@ -7,6 +7,7 @@
     android:layout_marginBottom="@dimen/post_item_margin_bottom">
     <ImageView
         android:id="@+id/post_thumbnail"
+        android:contentDescription="@string/post_thumbnail"
         android:src="@drawable/reddit_post_default"
         android:layout_width="@dimen/post_thumb_width"
         android:layout_height="@dimen/post_thumb_height"
@@ -14,6 +15,7 @@
         android:layout_margin="@dimen/post_thumb_margin" />
     <TextView
         android:id="@+id/post_text"
+        android:contentDescription="@string/post_title"
         android:textColor="@color/textDarkPrimary"
         android:fontFamily="sans-serif"
         android:layout_margin="@dimen/post_text_margin"

@@ -6,6 +6,7 @@
     android:gravity="center"
     android:background="@color/colorPrimaryDark">
     <ImageView
+        android:contentDescription="@string/reddit_icon"
         android:layout_width="@dimen/menu_img_width"
         android:layout_height="@dimen/menu_img_height"
         android:layout_marginBottom="@dimen/menu_img_margin_bottom"

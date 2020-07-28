@@ -59,4 +59,23 @@
     <string name="popular_subreddit">Popular Subreddit</string>
     <string name="my_subreddit">My Subreddit</string>
     <string name="my_post">My Post</string>
+    <string name="image_of_post_from_reddit">image of post from reddit</string>
+    <string name="title_of_post_from_reddit">title of post from reddit</string>
+    <string name="link_to_the_related_url_of_post_from_reddit">link to the related url of post from reddit</string>
+    <string name="subreddit_of_post_from_reddit">subreddit of post from reddit</string>
+    <string name="list_of_comments_for_post">list of comments for post</string>
+    <string name="ad_from_google_admob">advertisement from google ad mob</string>
+    <string name="tool_bar">tool bar</string>
+    <string name="list_of_my_favorite_posts">list of my favorite posts</string>
+    <string name="list_of_subsribed_subreddits">list of subsribed subreddits</string>
+    <string name="list_of_popular_subreddits">list of popular subreddits</string>
+    <string name="comment">comment</string>
+    <string name="unsubscribe_button">unsubscribe button</string>
+    <string name="my_subscribed_subreddit">my subscribed subreddit</string>
+    <string name="reddit_icon">reddit icon</string>
+    <string name="post_thumbnail">post thumbnail</string>
+    <string name="post_title">post title</string>
+    <string name="subscribe_btn">subscribe button</string>
+    <string name="subreddit_title">subreddit title</string>
+    <string name="subreddit_description">subreddit description</string>
 </resources>

@@ -6,6 +6,7 @@
     android:orientation="horizontal">
     <Button
         android:id="@+id/subreddit_subscribe"
+        android:contentDescription="@string/subscribe_btn"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/subscribe_btn_height"
         android:layout_margin="@dimen/subscribe_btn_margin"
@@ -17,6 +18,7 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/subreddit_text"
+            android:contentDescription="@string/subreddit_title"
             android:padding="@dimen/subreddit_text_padding"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -26,6 +28,7 @@
             android:fontFamily="sans-serif" />
         <TextView
             android:id="@+id/smallsubreddit_text"
+            android:contentDescription="@string/subreddit_description"
             android:paddingBottom="@dimen/small_subreddit_text_padding_bottom"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
