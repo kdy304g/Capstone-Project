@@ -9,6 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.Constraints;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -30,6 +33,7 @@ import android.widget.Toast;
 
 import com.example.randompostfromreddit.R;
 import com.example.randompostfromreddit.RedditAppWidgetProvider;
+import com.example.randompostfromreddit.CachePostWorker;
 import com.example.randompostfromreddit.adapter.CommentAdapter;
 import com.example.randompostfromreddit.model.Child;
 import com.example.randompostfromreddit.model.Child_Data;
@@ -45,6 +49,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -56,6 +61,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -153,7 +159,14 @@ public class MainActivity extends AppCompatActivity {
         if(linkFromWidget != null){
             populatePost(linkFromWidget);
         } else{
-            getNewPost();
+            if(pref.getBoolean(getString(R.string.data_cached),false)){
+                loadCachedPost();
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putBoolean(getString(R.string.data_cached),false);
+                edit.commit();
+            }else{
+                getNewPost();
+            }
         }
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -164,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
     }
 
     @Override
@@ -184,6 +198,20 @@ public class MainActivity extends AppCompatActivity {
                     getAccessToken(code);
                 }
             }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(!pref.getBoolean(getString(R.string.worker_initialized), false)){
+            PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(CachePostWorker.class, 1, TimeUnit.MINUTES)
+                    .setConstraints(Constraints.NONE)
+                    .build();
+            WorkManager.getInstance(this).enqueue(work);
+            SharedPreferences.Editor edit = pref.edit();
+            edit.putBoolean(getString(R.string.worker_initialized),true);
+            edit.commit();
         }
     }
 
@@ -211,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.commit();
                     title.setText(article.getData().getTitle());
                     url.setText(article.getData().getUrl());
-                    subreddit_name.setText(getString(R.string.subreddit)+article.getData().getSubreddit());
+                    subreddit_name.setText(getString(R.string.subreddit_title_, article.getData().getSubreddit()));
                     String image_url = article.getData().getThumbnail();
                     if (image_url.isEmpty() || image_url.equals(getString(R.string.self)) || image_url.equals(getString(R.string.default_)) || image_url.equals(getString(R.string.spoiler))|| image_url.equals(getString(R.string.nsfw))){
                         post_image.setVisibility(View.GONE);
@@ -260,6 +288,30 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(getString(R.string.error),t.getMessage());
             }
         });
+    }
+
+    public void loadCachedPost(){
+        TextView title = findViewById(R.id.post_title);
+        ImageView post_image = findViewById(R.id.post_image);
+        TextView url = findViewById(R.id.post_url);
+        TextView subreddit_name = findViewById(R.id.post_subreddit);
+
+        String post = pref.getString(getString(R.string.current_post),"");
+        Gson gson = new Gson();
+        Child_Data data = gson.fromJson(post, Child_Data.class);
+        title.setText(data.getTitle());
+        String image_url = data.getThumbnail();
+        if (image_url.isEmpty() || image_url.equals(getString(R.string.self)) || image_url.equals(getString(R.string.default_)) || image_url.equals(getString(R.string.spoiler))|| image_url.equals(getString(R.string.nsfw))){
+            post_image.setVisibility(View.GONE);
+        }else{
+            post_image.setVisibility((View.VISIBLE));
+            Picasso.get().load(image_url).placeholder(R.drawable.reddit_default).into(post_image);
+        }
+        String comments = pref.getString(getString(R.string.comments),"");
+        ArrayList<Child> comment = gson.fromJson(comments,new TypeToken<ArrayList<Child>>(){}.getType());
+        adapter.setComments(comment);
+        url.setText(data.getUrl());
+        subreddit_name.setText(getString(R.string.subreddit_title_, data.getSubreddit()));
     }
 
     public void writePostFirebase(){

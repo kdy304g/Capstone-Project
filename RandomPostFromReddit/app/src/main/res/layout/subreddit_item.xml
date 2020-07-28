@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:focusable="true">
     <Button
         android:id="@+id/subreddit_subscribe"
         android:contentDescription="@string/subscribe_btn"

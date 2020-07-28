@@ -78,4 +78,8 @@
     <string name="subscribe_btn">subscribe button</string>
     <string name="subreddit_title">subreddit title</string>
     <string name="subreddit_description">subreddit description</string>
+    <string name="subreddit_title_">Subreddit:  %1$s.</string>
+    <string name="comments">comments</string>
+    <string name="worker_initialized">workerInitialized</string>
+    <string name="data_cached">data_cached</string>
 </resources>

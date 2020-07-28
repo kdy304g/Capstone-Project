@@ -68,7 +68,10 @@ public class SubredditAdapter extends RecyclerView.Adapter<SubredditAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        return children.size();
+        if (children != null){
+            return children.size();
+        }
+        return 0;
     }
 
     @Override
